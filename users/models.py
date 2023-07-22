@@ -16,7 +16,7 @@ class User(models.Model):
     email = models.EmailField(
         verbose_name="Адрес электронной почты", unique=True
     )
-    phone_number = models.IntegerField(
+    phone_number = models.CharField(
         max_length=16 ,unique=True, verbose_name="Номер телефона"
     )
     created_at = models.DateTimeField(
@@ -33,6 +33,12 @@ class User(models.Model):
         return self.username
 
 
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
+
+
+
 # История перевода денег
 class HistoryTransfer(models.Model):
     from_user = models.ForeignKey(
@@ -43,16 +49,15 @@ class HistoryTransfer(models.Model):
         'User', on_delete=models.CASCADE, related_name='received_transfers',
         verbose_name="Кому"
     )
-    is_completed = models.BooleanField(
-        default=False
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-    amount = models.DecimalField(
-        max_length=10, decimal_places=2
-    )
+    is_completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
 
 
     def __str__(self) -> str:
         return f'Перевод от {self.from_user} к {self.to_user}'
+
+
+    class Meta:
+        verbose_name = "История переводов"
+        verbose_name_plural = "История переводов"
