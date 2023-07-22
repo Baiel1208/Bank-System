@@ -25,8 +25,15 @@ class User(models.Model):
     age = models.PositiveIntegerField(
         verbose_name="Возраст"
     )
+    balance = models.CharField(
+        max_length=255,
+        verbose_name="Баланс",
+        blank = True, null = True,
+        default=0
+    )
     wallet_adress = models.CharField(
-        max_length=12, default=generate_wallet_address
+        max_length=12, default=generate_wallet_address,
+        verbose_name='Уникальный кошелек'
     )
 
     def __str__(self):
