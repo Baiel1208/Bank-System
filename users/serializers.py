@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import password_validation
-from .models import User, HistoryTransfer
+from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,14 +17,6 @@ class UserDetailSerializer(serializers.ModelSerializer):
                 'last_name', 'email', 'phone_number', 'created_at',
                 'age', 'wallet_adress',)
 
-# История переводов
-class HistoryTransferSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = HistoryTransfer
-        fields = (
-            'id', 'from_user', 'to_user', 'is_completed', 'created_at',
-            'amount' 
-        )
 
 # Регистрация
 class UserRegisterSerializer(serializers.ModelSerializer):

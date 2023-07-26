@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # apps
     'users',
+    'transfers',
 ]
 
 MIDDLEWARE = [
