@@ -3,7 +3,6 @@ from django.db import models
 from users.models import User
 
 # Create your models here.
-
 # История перевода денег
 class HistoryTransfer(models.Model):
     from_user = models.ForeignKey(

@@ -15,4 +15,8 @@ class HistoryTransferSerializer(serializers.ModelSerializer):
 class MoneyTransferHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = HistoryTransfer
-        fields = ('id', )
+        # fields = ('id', )
+        fields = (
+            'id', 'from_user', 'to_user', 'is_completed', 'created_at',
+            'amount' 
+        )

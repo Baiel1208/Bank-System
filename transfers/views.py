@@ -12,7 +12,7 @@ from users.models import User
 class CreateTransfersView(CreateAPIView):
     serializer_class = HistoryTransferSerializer
     permission_classes = [IsAuthenticated]
-    
+
 
     def post(self, request):
         from_user_id = request.data.get('from_user')
