@@ -6,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 'username', 'email', 'phone_number', 'created_at',
+            'id', 'username', 'email', 'phone_number', 'date_joined',
             'age', 'wallet_adress')
 
 
@@ -14,7 +14,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         fields = ('id', 'username', 'first_name',
-                'last_name', 'email', 'phone_number', 'created_at',
+                'last_name', 'email', 'phone_number', 'date_joined',
                 'age', 'wallet_adress',)
 
 
@@ -30,14 +30,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id',  'username', 'email', 
-                'phone_number', 'age','created_at','password', 'confirm_password')
+                'phone_number', 'age','date_joined','password', 'confirm_password')
 
 
     def validate(self, attrs):
         if attrs['password'] != attrs['confirm_password']:
             raise serializers.ValidationError({'password': 'Пароли отличаются'})
-        if attrs['username'] == attrs['password']:
-            raise serializers.ValidationError({'username':'Пароль похож на имя пользователя'})
         # Используйте функцию validate_password, чтобы применить все валидаторы пароля.
         password_validation.validate_password(attrs['password'], self.instance)
         # phone number 
@@ -46,10 +44,15 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return attrs
 
 
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        user = User(**validated_data)
-        user.set_password(password)
+    def create(self, validated_data: dict):
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            age=validated_data['age'],
+            phone_number=validated_data['phone_number']
+        )
+        user.set_password(validated_data['password'])
+
         user.save()
         return user
 

@@ -1,6 +1,8 @@
 import random, string
 from django.db import models
 
+from django.contrib.auth.models import AbstractUser
+
 
 def generate_wallet_address():
     # Генерируем случайную строку из 12 символов (цифры и буквы в верхнем и нижнем регистре)
@@ -9,20 +11,20 @@ def generate_wallet_address():
 
 
 # Create your models here.
-class User(models.Model):
-    username = models.CharField(
-        max_length=255,verbose_name="Имя пользователя", unique=True
-    ) 
-    email = models.EmailField(
-        verbose_name="Адрес электронной почты", unique=True
-    )
+class User(AbstractUser):
+    # username = models.CharField(
+    #     max_length=255,verbose_name="Имя пользователя", unique=True
+    # ) 
+    # email = models.EmailField(
+    #     verbose_name="Адрес электронной почты", unique=True
+    # )
     phone_number = models.CharField(
         max_length=16 ,unique=True, verbose_name="Номер телефона"
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True, verbose_name='Дата и время входа'
-    )
-    age = models.PositiveIntegerField(
+    # created_at = models.DateTimeField(
+    #     auto_now_add=True, verbose_name='Дата и время входа'
+    # )
+    age = models.PositiveIntegerField(blank=True,null=True,
         verbose_name="Возраст"
     )
     balance = models.CharField(

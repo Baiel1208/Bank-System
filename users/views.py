@@ -34,3 +34,4 @@ class UserRegisterAPIView(mixins.CreateModelMixin,GenericViewSet):
     def get_serializer_class(self):
         if self.action in ('create', ):
             return UserRegisterSerializer
+        return UserSerializer
